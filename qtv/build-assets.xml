@@ -1,0 +1,176 @@
+<!--
+    Assets definition file for complex project application.
+
+    This file defines all declared assets in subprojects; the
+    definitions are shared across those subprojects so that assets
+    exported by one project can be referenced by another,
+    without knowing the exact location of the exported asset.
+-->
+<project name="quick.tv.assets">
+
+	<taskdef name="S3Upload" classname="dak.ant.taskdefs.S3Upload">
+		<classpath>
+			<pathelement location="${qtv.lib}/awstasks-0.3.jar"/>
+			<pathelement location="${qtv.lib}/jets3t-0.7.4.jar" />
+			<pathelement location="${qtv.lib}/commons-logging-1.1.1.jar" />
+			<pathelement location="${qtv.lib}/commons-httpclient-3.1.jar" />
+			<pathelement location="${qtv.lib}/commons-codec-1.3.jar" />
+		</classpath>
+	</taskdef>
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${qtv.lib}/ant-contrib.jar" />
+		</classpath>
+	</taskdef>
+	
+	<tstamp>
+		<format property="now" pattern="yyyyMMddHHmmss"/>
+	</tstamp>
+
+	<exec executable="git" outputproperty="release.version" dir="${quick.tv.imports.dir}">
+		<arg line="describe" />
+	</exec>
+	
+	<echo>qtv @${release.version}</echo>
+	
+	<exec executable="git" outputproperty="flex.core.version" dir="${quick.tv.imports.dir}/qtv-flex-core">
+		<arg line="describe" />
+	</exec>
+	
+	<echo>qtv-flex-core @${flex.core.version}</echo>
+	
+	<exec executable="git" outputproperty="webapp.client.version" dir="${quick.tv.imports.dir}/qtv-webapp-client">
+		<arg line="describe" />
+	</exec>
+
+	<echo>qtv-webapp-client @${webapp.client.version}</echo>
+
+	<exec executable="git" outputproperty="interactive.video.player.version" dir="${quick.tv.imports.dir}/qtv-interactive-video-player">
+		<arg line="describe" />
+	</exec>
+	
+	<echo>qtv-interactive-video-player @${interactive.video.player.version}</echo>
+	
+	<exec executable="git" outputproperty="play.webapp.version" dir="${quick.tv.imports.dir}/qtv-play-webapp">
+		<arg line="describe" />
+	</exec>
+	
+	<echo>qtv-play-webapp @${play.webapp.version}</echo>
+
+	<import file="qtv-flex-core/qtv-ooyala-module/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-assets/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-datastructures/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-operations/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-utils/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-core-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-core-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-component-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-core-components-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-component-service-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-application-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-application-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-operations/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-skins/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-editor-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-youtube/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-ooyala/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-kaltura/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-botr/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-brightcove/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-vimeo/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-vzaar/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-videoplayer/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-accountview/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-service-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-flex-service-json/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-haxe-component-service-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-haxe-datastructures/build-assets.xml"/>
+	<import file="qtv-flex-core/qtv-haxe-operations/build-assets.xml"/>
+	<import file="qtv-flex-core/qtv-haxe-utils/build-assets.xml"/>
+	<import file="qtv-flex-core/qtv-haxe-core-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-haxe-core-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-haxe-application-api/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-haxe-application-impl/build-assets.xml" />
+	<import file="qtv-flex-core/qtv-haxe-service-api/build-assets.xml"/>
+	<import file="qtv-flex-core/qtv-haxe-service-json/build-assets.xml"/>
+	<import file="qtv-webapp-client/qtv-flex-analytics-browser-api/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-analytics-browser-impl/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-file-browser-api/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-media-browser-api/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-project-browser-api/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-videos-browser-api/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-file-browser-impl/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-media-browser-impl/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-project-browser-impl/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-videos-browser-impl/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-api/build-assets.xml" />
+	<import file="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player-api/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-youtube/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-ooyala/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-kaltura/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-brightcove/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-vzaar/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-controls-default/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-controls-ooyala/build-assets.xml" />
+	<import file="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player/build-assets.xml" />
+	<import file="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-management-client/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-editor-impl/build-assets.xml" />
+	<import file="qtv-webapp-client/qtv-flex-editor-vod/build-assets.xml" />
+	<import file="xuloo-haxe-ui/build-assets.xml"/>
+	<import file="qtv-haxe-ui/build-assets.xml"/>
+	<import file="qtv-haxe-api/build-assets.xml"/>
+	<import file="qtv-play-webapp/build-assets.xml" />
+
+	<property name="as3-signals.swc" location="${quick.tv.imports.dir}/lib/as3-signals-v0.9-BETA.swc" />
+	<property name="robotlegs-framework.swc" location="${quick.tv.imports.dir}/lib/robotlegs-framework-v1.5.2.swc" />
+	<property name="as3commons-logging.swc" location="${quick.tv.imports.dir}/lib/as3commons-logging-2.8-SNAPSHOT.swc" />
+	<property name="as3commons-lang.swc" location="${quick.tv.imports.dir}/lib/as3commons-lang-0.3.6-SNAPSHOT.swc" />
+	<property name="signals-extension-SignalsCommandMap.swc" location="${quick.tv.imports.dir}/lib/signals-extension-SignalsCommandMap-v0.4.swc" />
+	<property name="hamcrest-as3-only.swc" location="${quick.tv.imports.dir}/lib/hamcrest-as3-only-1.1.3.swc" />
+	<property name="as3corelib.swc" location="${quick.tv.imports.dir}/lib/as3corelib.swc" />
+	<property name="monsterdebugger.swc" location="${quick.tv.imports.dir}/lib/MonsterDebugger.swc" />
+	<property name="flexunit.swc" location="${quick.tv.imports.dir}/lib/flexunit-4.1-RC2.swc" />
+	<property name="ooyala.player.api.swc" location="${quick.tv.imports.dir}/lib/ooyala_player_api.swc" />
+	<property name="ooyala.open.player.sdk.swc" location="${quick.tv.imports.dir}/lib/openplayersdk-1.0.0.swc" />
+	<property name="brightcove-player-api.swc" location="${quick.tv.imports.dir}/lib/BrightcovePlayerAPI-1.0.swc" />
+	<property name="jw-player.swc" location="${quick.tv.imports.dir}/lib/jwplayer-lib-5.swc" />
+	<property name="tween-lite.swc" location="${quick.tv.imports.dir}/lib/greensock.swc" />
+	<property name="as3.crypto.swc" location="${quick.tv.imports.dir}/lib/as3crypto.swc" />
+	<property name="ga.tracker.swc" location="${quick.tv.imports.dir}/lib/analytics.swc" />
+
+	<property name="commons-codec.lib" location="${quick.tv.imports.dir}/lib/commons-codec-1.3.jar" />
+	<property name="commons-httplient.lib" location="${quick.tv.imports.dir}/lib/commons-httpclient-3.1.jar" />
+	<property name="commons-logging.lib" location="${quick.tv.imports.dir}/lib/commons-logging-1.1.1.jar" />
+	<property name="log4j.lib" location="${quick.tv.imports.dir}/lib/log4j-1.2.15.jar" />
+	
+	<target name="update-version">
+
+		<exec executable="git" outputproperty="flex.core.version" dir="${quick.tv.imports.dir}/qtv-flex-core">
+			<arg line="describe" />
+		</exec>
+		
+		<echo>qtv-flex-core @${flex.core.version}</echo>
+		
+		<exec executable="git" outputproperty="webapp.client.version">
+			<arg line="describe" />
+		</exec>
+
+		<echo>qtv-webapp-client @${webapp.client.version}</echo>
+
+		<exec executable="git" outputproperty="interactive.video.player.version" dir="${quick.tv.imports.dir}/qtv-interactive-video-player">
+			<arg line="describe" />
+		</exec>
+		
+		<echo>qtv-interactive-video-player @${interactive.video.player.version}</echo>
+		
+		<exec executable="git" outputproperty="play.webapp.version" dir="${quick.tv.imports.dir}/qtv-play-webapp">
+			<arg line="describe" />
+		</exec>
+		
+		<echo>qtv-play-webapp @${play.webapp.version}</echo>
+
+	</target>
+
+</project>

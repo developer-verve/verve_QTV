@@ -1,0 +1,13 @@
+./obj/blackberrysim/libs/zlib/ZLib.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/adler32.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/crc32.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/infback.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/inflate.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/uncompr.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/compress.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/deflate.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/gzio.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/inffast.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/inftrees.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/trees.o
+./obj/blackberrysim/.//thirdparty/zlib-1.2.3/zutil.o

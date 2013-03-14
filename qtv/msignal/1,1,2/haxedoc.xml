@@ -1,0 +1,616 @@
+<haxe><class file="src/msignal/Signal.hx" path="msignal.Signal" params="TSlot:TListener">
+		<get_numListeners line="167" set="method"><f a=""><c path="Int"/></f></get_numListeners>
+		<createSlot line="162" set="method">
+			<f a="listener:?once:?priority">
+				<c path="msignal.Signal.TListener"/>
+				<e path="Bool"/>
+				<c path="Int"/>
+				<c path="msignal.Signal.TSlot"/>
+			</f>
+			<meta><m n="IgnoreCover"/></meta>
+		</createSlot>
+		<registrationPossible line="144" set="method"><f a="listener:once">
+	<c path="msignal.Signal.TListener"/>
+	<e path="Bool"/>
+	<e path="Bool"/>
+</f></registrationPossible>
+		<registerListener line="128" set="method"><f a="listener:?once:?priority">
+	<c path="msignal.Signal.TListener"/>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<c path="msignal.Signal.TSlot"/>
+</f></registerListener>
+		<removeAll line="123" public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>Unsubscribes all listeners from the signal.</haxe_doc>
+		</removeAll>
+		<remove line="111" public="1" set="method">
+			<f a="listener">
+				<c path="msignal.Signal.TListener"/>
+				<c path="msignal.Signal.TSlot"/>
+			</f>
+			<haxe_doc>Unsubscribes a listener from the signal.
+	
+	@param listener The listener to remove
+	@return The removed listener slot</haxe_doc>
+		</remove>
+		<addOnceWithPriority line="100" public="1" set="method">
+			<f a="listener:?priority">
+				<c path="msignal.Signal.TListener"/>
+				<c path="Int"/>
+				<c path="msignal.Signal.TSlot"/>
+			</f>
+			<haxe_doc>Subscribes a one-time listener for this signal.
+	The signal will remove the listener automatically the first time it is called,
+	after the dispatch to all listeners is complete.
+	
+	@param listener A function matching the signature of TListener
+	@return The added listener slot</haxe_doc>
+		</addOnceWithPriority>
+		<addWithPriority line="87" public="1" set="method">
+			<f a="listener:?priority">
+				<c path="msignal.Signal.TListener"/>
+				<c path="Int"/>
+				<c path="msignal.Signal.TSlot"/>
+			</f>
+			<haxe_doc>Subscribes a listener for the signal.
+	After you successfully register an event listener,
+	you cannot change its priority through additional calls to add().
+	To change a listener's priority, you must first call remove().
+	Then you can register the listener again with the new priority level.
+	
+	@param listener A function matching the signature of TListener
+	@return The added listener slot</haxe_doc>
+		</addWithPriority>
+		<addOnce line="72" public="1" set="method">
+			<f a="listener">
+				<c path="msignal.Signal.TListener"/>
+				<c path="msignal.Signal.TSlot"/>
+			</f>
+			<haxe_doc>Subscribes a one-time listener for this signal.
+	The signal will remove the listener automatically the first time it is called,
+	after the dispatch to all listeners is complete.
+	
+	@param listener A function matching the signature of TListener
+	@return The added listener slot</haxe_doc>
+		</addOnce>
+		<add line="59" public="1" set="method">
+			<f a="listener">
+				<c path="msignal.Signal.TListener"/>
+				<c path="msignal.Signal.TSlot"/>
+			</f>
+			<haxe_doc>Subscribes a listener for the signal.
+	
+	@param listener A function matching the signature of TListener
+	@return The added listener slot</haxe_doc>
+		</add>
+		<priorityBased><e path="Bool"/></priorityBased>
+		<slots><c path="msignal.SlotList">
+	<c path="msignal.Signal.TSlot"/>
+	<c path="msignal.Signal.TListener"/>
+</c></slots>
+		<numListeners public="1" get="get_numListeners" set="null">
+			<c path="Int"/>
+			<haxe_doc>The current number of listeners for the signal.</haxe_doc>
+		</numListeners>
+		<valueClasses public="1"><c path="Array"><d/></c></valueClasses>
+		<new line="45" set="method"><f a="?valueClasses">
+	<c path="Array"><d/></c>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>A Signal manages a list of listeners, which are executed when the signal is 
+dispatched.</haxe_doc>
+	</class><class file="src/msignal/EventSignal.hx" path="msignal.EventSignal" params="TTarget:TType">
+		<extends path="msignal.Signal">
+			<c path="msignal.EventSlot"><c path="msignal.EventSignal.TType"/></c>
+			<f a="">
+				<c path="msignal.Event">
+					<c path="msignal.EventSignal.TTarget"/>
+					<c path="msignal.EventSignal.TType"/>
+				</c>
+				<e path="Void"/>
+			</f>
+		</extends>
+		<createSlot line="125" override="1" set="method">
+			<f a="listener:?once:?priority">
+				<f a="">
+					<c path="msignal.Event">
+						<c path="msignal.EventSignal.TTarget"/>
+						<c path="msignal.EventSignal.TType"/>
+					</c>
+					<e path="Void"/>
+				</f>
+				<e path="Bool"/>
+				<c path="Int"/>
+				<c path="msignal.EventSlot"><c path="msignal.EventSignal.TType"/></c>
+			</f>
+			<haxe_doc>Internal method used to create the slot type for this signal.</haxe_doc>
+		</createSlot>
+		<bubbleType line="117" public="1" set="method">
+			<f a="type">
+				<c path="msignal.EventSignal.TType"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>A convenience method for dispatching an event without having to instantiate 
+	it directly. This helps prevent the ink wearing off your angle bracket keys.</haxe_doc>
+		</bubbleType>
+		<bubble line="90" public="1" set="method">
+			<f a="event">
+				<c path="msignal.Event">
+					<c path="msignal.EventSignal.TTarget"/>
+					<c path="msignal.EventSignal.TType"/>
+				</c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Dispatches an event to this signals listeners by calling `dispatch`, and 
+	then attempts to bubble the event by checking if `target` has a field 
+	`parent` of type `EventDispatcher`. Each event dispatcher in the chain 
+	has an opportunity to cancel bubbling by returning `false` when 
+	`dispatchEvent` is called.
+
+	EventSignals are themselves EventDispatchers, which simplifies creating 
+	bubbling chains without creating another hierarchy.</haxe_doc>
+		</bubble>
+		<dispatchType line="75" public="1" set="method"><f a="type">
+	<c path="msignal.EventSignal.TType"/>
+	<e path="Void"/>
+</f></dispatchType>
+		<dispatch line="53" public="1" set="method">
+			<f a="event">
+				<c path="msignal.Event">
+					<c path="msignal.EventSignal.TTarget"/>
+					<c path="msignal.EventSignal.TType"/>
+				</c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Dispatches an event to the listeners of the `EventSignal`.</haxe_doc>
+		</dispatch>
+		<target public="1" set="null">
+			<c path="msignal.EventSignal.TTarget"/>
+			<haxe_doc>The object for which this signal dispatches events.</haxe_doc>
+		</target>
+		<new line="44" public="1" set="method">
+			<f a="target">
+				<c path="msignal.EventSignal.TTarget"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Creates an `EventSignal` for the provided target.</haxe_doc>
+		</new>
+		<haxe_doc>Signal that executes listeners with one arguments.</haxe_doc>
+	</class><class file="src/msignal/Slot.hx" path="msignal.Slot" params="TSignal:TListener">
+		<set_listener line="91" set="method"><f a="value">
+	<c path="msignal.Slot.TListener"/>
+	<c path="msignal.Slot.TListener"/>
+</f></set_listener>
+		<remove line="76" public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>Removes the slot from its signal.</haxe_doc>
+		</remove>
+		<signal><c path="msignal.Slot.TSignal"/></signal>
+		<enabled public="1">
+			<e path="Bool"/>
+			<haxe_doc>Whether the listener is called on execution. Defaults to true.</haxe_doc>
+		</enabled>
+		<priority public="1" set="null">
+			<c path="Int"/>
+			<haxe_doc>The priority of this slot should be given in the execution order.
+	An Signal will call higher numbers before lower ones.
+	Defaults to 0.</haxe_doc>
+		</priority>
+		<once public="1" set="null">
+			<e path="Bool"/>
+			<haxe_doc>Whether this slot is automatically removed after it has been used once.</haxe_doc>
+		</once>
+		<listener public="1" set="set_listener">
+			<c path="msignal.Slot.TListener"/>
+			<haxe_doc>The listener associated with this slot.
+	Note: for hxcpp 2.10 this requires a getter method to compile</haxe_doc>
+		</listener>
+		<new line="64" set="method"><f a="signal:listener:?once:?priority">
+	<c path="msignal.Slot.TSignal"/>
+	<c path="msignal.Slot.TListener"/>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>Defines the basic properties of a listener associated with a Signal.</haxe_doc>
+	</class><class module="msignal.EventSignal" file="src/msignal/EventSignal.hx" path="msignal.EventSlot" params="TValue">
+		<extends path="msignal.Slot">
+			<d/>
+			<f a="">
+				<c path="msignal.Event">
+					<d/>
+					<c path="msignal.EventSlot.TValue"/>
+				</c>
+				<e path="Void"/>
+			</f>
+		</extends>
+		<typeEq line="171" public="1" set="method" static="1"><f a="a:b">
+	<d/>
+	<d/>
+	<e path="Bool"/>
+</f></typeEq>
+		<enumTypeEq line="198" public="1" set="method" static="1">
+			<f a="a:b">
+				<c path="EnumValue"/>
+				<c path="EnumValue"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc><![CDATA[* Compares enum equality, ignoring any non enum parameters, so that:
+	 *	Fail(IO("One thing happened")) == Fail(IO("Another thing happened"))
+	 * 
+	 * Also allows for wildcard matching by passing through <code>null</code> for
+	 * any params, so that:
+	 *  Fail(IO(null)) matches Fail(IO("Another thing happened"))
+	 *
+	 * @param a the enum value to filter on
+	 * @param b the enum value being checked]]></haxe_doc>
+		</enumTypeEq>
+		<forType line="166" public="1" set="method">
+			<f a="value">
+				<c path="msignal.EventSlot.TValue"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Restricts the slot to firing for events of a specific type.
+	EnumValues with paramaters can specifiy explicit or fuzzy matching criteria.trace
+
+	To match against specific <code>param</code> values include them in the type (e.g. Progress(1))
+	To fuzzy match against any value use a <code>null</code> value (e.g. Progress(null))]]></haxe_doc>
+		</forType>
+		<execute line="150" public="1" set="method">
+			<f a="value1">
+				<c path="msignal.Event">
+					<d/>
+					<c path="msignal.EventSlot.TValue"/>
+				</c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Executes a listener with one argument.
+	If type <code>params</code> are not null, it will check type equality on enum parameters.]]></haxe_doc>
+		</execute>
+		<filterType>
+			<t path="Null"><c path="msignal.EventSlot.TValue"/></t>
+			<haxe_doc>The expected type for this slot or null if one has not been set using `forType`.</haxe_doc>
+		</filterType>
+		<new line="141" public="1" set="method"><f a="signal:listener:?once:?priority">
+	<d/>
+	<f a="">
+		<c path="msignal.Event">
+			<d/>
+			<c path="msignal.EventSlot.TValue"/>
+		</c>
+		<e path="Void"/>
+	</f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>A slot that executes a listener with one argument.</haxe_doc>
+	</class><class module="msignal.EventSignal" file="src/msignal/EventSignal.hx" path="msignal.Event" params="TTarget:TType">
+		<currentTarget public="1">
+			<c path="msignal.Event.TTarget"/>
+			<haxe_doc>The most recent target of the event. This is set each time an `EventSignal` 
+	dispatches an event. When an event bubbles, `target` is the original target 
+	while `currentTarget` is the most recent.</haxe_doc>
+		</currentTarget>
+		<type public="1" set="null">
+			<c path="msignal.Event.TType"/>
+			<haxe_doc>The type of the event.</haxe_doc>
+		</type>
+		<target public="1" set="null">
+			<c path="msignal.Event.TTarget"/>
+			<haxe_doc>The target of the original signal that dispatched this event.</haxe_doc>
+		</target>
+		<signal public="1" set="null">
+			<c path="msignal.EventSignal">
+				<c path="msignal.Event.TTarget"/>
+				<c path="msignal.Event.TType"/>
+			</c>
+			<haxe_doc>The original signal that dispatched this event.</haxe_doc>
+		</signal>
+		<new line="255" public="1" set="method"><f a="type">
+	<c path="msignal.Event.TType"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>EventSignals dispatch Events. Events encapsulate information that listeners 
+might need to act on the event: the target/signal of the event (where it 
+originated), the current target (the target of the most recent signal to 
+dispatch the event) and the type. To avoid developers needing to subclass Event 
+to create custom fields and data, Events use type parameters to define target 
+and type constraints, and use enums as event types to allow additional data.</haxe_doc>
+	</class><class module="msignal.EventSignal" file="src/msignal/EventSignal.hx" path="msignal.EventDispatcher" params="TEvent" interface="1">
+		<dispatchEvent public="1" set="method">
+			<f a="event">
+				<c path="msignal.EventDispatcher.TEvent"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Dispatch an event, returning `true` if the event should continue to bubble, 
+	and `false` if not.</haxe_doc>
+		</dispatchEvent>
+		<haxe_doc>This EventDispatcher interface.</haxe_doc>
+	</class><typedef module="msignal.Signal" file="src/msignal/Signal.hx" path="msignal.AnySignal" params=""><c path="msignal.Signal">
+	<d/>
+	<d/>
+</c></typedef><class module="msignal.Signal" file="src/msignal/Signal.hx" path="msignal.Signal0" params="">
+		<extends path="msignal.Signal">
+			<c path="msignal.Slot0"/>
+			<f a=""><e path="Void"/></f>
+		</extends>
+		<createSlot line="197" override="1" set="method"><f a="listener:?once:?priority">
+	<f a=""><e path="Void"/></f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<c path="msignal.Slot0"/>
+</f></createSlot>
+		<dispatch line="186" public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>Executes the signals listeners with no arguements.</haxe_doc>
+		</dispatch>
+		<new line="178" public="1" set="method"><f a=""><e path="Void"/></f></new>
+		<haxe_doc>Signal that executes listeners with no arguments.</haxe_doc>
+	</class><class module="msignal.Signal" file="src/msignal/Signal.hx" path="msignal.Signal1" params="TValue">
+		<extends path="msignal.Signal">
+			<c path="msignal.Slot1"><c path="msignal.Signal1.TValue"/></c>
+			<f a="">
+				<c path="msignal.Signal1.TValue"/>
+				<e path="Void"/>
+			</f>
+		</extends>
+		<createSlot line="227" override="1" set="method"><f a="listener:?once:?priority">
+	<f a="">
+		<c path="msignal.Signal1.TValue"/>
+		<e path="Void"/>
+	</f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<c path="msignal.Slot1"><c path="msignal.Signal1.TValue"/></c>
+</f></createSlot>
+		<dispatch line="216" public="1" set="method">
+			<f a="value">
+				<c path="msignal.Signal1.TValue"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Executes the signals listeners with one arguement.</haxe_doc>
+		</dispatch>
+		<new line="208" public="1" set="method"><f a="?type">
+	<d/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>Signal that executes listeners with one arguments.</haxe_doc>
+	</class><class module="msignal.Signal" file="src/msignal/Signal.hx" path="msignal.Signal2" params="TValue1:TValue2">
+		<extends path="msignal.Signal">
+			<c path="msignal.Slot2">
+				<c path="msignal.Signal2.TValue1"/>
+				<c path="msignal.Signal2.TValue2"/>
+			</c>
+			<f a=":">
+				<c path="msignal.Signal2.TValue1"/>
+				<c path="msignal.Signal2.TValue2"/>
+				<e path="Void"/>
+			</f>
+		</extends>
+		<createSlot line="257" override="1" set="method"><f a="listener:?once:?priority">
+	<f a=":">
+		<c path="msignal.Signal2.TValue1"/>
+		<c path="msignal.Signal2.TValue2"/>
+		<e path="Void"/>
+	</f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<c path="msignal.Slot2">
+		<c path="msignal.Signal2.TValue1"/>
+		<c path="msignal.Signal2.TValue2"/>
+	</c>
+</f></createSlot>
+		<dispatch line="246" public="1" set="method">
+			<f a="value1:value2">
+				<c path="msignal.Signal2.TValue1"/>
+				<c path="msignal.Signal2.TValue2"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Executes the signals listeners with two arguements.</haxe_doc>
+		</dispatch>
+		<new line="238" public="1" set="method"><f a="?type1:?type2">
+	<d/>
+	<d/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>Signal that executes listeners with two arguments.</haxe_doc>
+	</class><typedef module="msignal.Slot" file="src/msignal/Slot.hx" path="msignal.AnySlot" params=""><c path="msignal.Slot">
+	<d/>
+	<d/>
+</c></typedef><class module="msignal.Slot" file="src/msignal/Slot.hx" path="msignal.Slot0" params="">
+		<extends path="msignal.Slot">
+			<c path="msignal.Signal0"/>
+			<f a=""><e path="Void"/></f>
+		</extends>
+		<execute line="111" public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>Executes a listener with no arguments.</haxe_doc>
+		</execute>
+		<new line="103" public="1" set="method"><f a="signal:listener:?once:?priority">
+	<c path="msignal.Signal0"/>
+	<f a=""><e path="Void"/></f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>A slot that executes a listener with no arguments.</haxe_doc>
+	</class><class module="msignal.Slot" file="src/msignal/Slot.hx" path="msignal.Slot1" params="TValue">
+		<extends path="msignal.Slot">
+			<c path="msignal.Signal1"><c path="msignal.Slot1.TValue"/></c>
+			<f a="">
+				<c path="msignal.Slot1.TValue"/>
+				<e path="Void"/>
+			</f>
+		</extends>
+		<execute line="138" public="1" set="method">
+			<f a="value1">
+				<c path="msignal.Slot1.TValue"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Executes a listener with one argument.
+	If <code>param</code> is not null, it overrides the value provided.]]></haxe_doc>
+		</execute>
+		<param public="1">
+			<d/>
+			<haxe_doc>Allows the slot to inject the argument to dispatch.</haxe_doc>
+		</param>
+		<new line="129" public="1" set="method"><f a="signal:listener:?once:?priority">
+	<c path="msignal.Signal1"><c path="msignal.Slot1.TValue"/></c>
+	<f a="">
+		<c path="msignal.Slot1.TValue"/>
+		<e path="Void"/>
+	</f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>A slot that executes a listener with one argument.</haxe_doc>
+	</class><class module="msignal.Slot" file="src/msignal/Slot.hx" path="msignal.Slot2" params="TValue1:TValue2">
+		<extends path="msignal.Slot">
+			<c path="msignal.Signal2">
+				<c path="msignal.Slot2.TValue1"/>
+				<c path="msignal.Slot2.TValue2"/>
+			</c>
+			<f a=":">
+				<c path="msignal.Slot2.TValue1"/>
+				<c path="msignal.Slot2.TValue2"/>
+				<e path="Void"/>
+			</f>
+		</extends>
+		<execute line="172" public="1" set="method">
+			<f a="value1:value2">
+				<c path="msignal.Slot2.TValue1"/>
+				<c path="msignal.Slot2.TValue2"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Executes a listener with two arguments.
+	If <code>param1</code> or <code>param2</code> is set, 
+	they override the values provided.]]></haxe_doc>
+		</execute>
+		<param2 public="1">
+			<d/>
+			<haxe_doc>Allows the slot to inject the second argument to dispatch.</haxe_doc>
+		</param2>
+		<param1 public="1">
+			<d/>
+			<haxe_doc>Allows the slot to inject the first argument to dispatch.</haxe_doc>
+		</param1>
+		<new line="162" public="1" set="method"><f a="signal:listener:?once:?priority">
+	<c path="msignal.Signal2">
+		<c path="msignal.Slot2.TValue1"/>
+		<c path="msignal.Slot2.TValue2"/>
+	</c>
+	<f a=":">
+		<c path="msignal.Slot2.TValue1"/>
+		<c path="msignal.Slot2.TValue2"/>
+		<e path="Void"/>
+	</f>
+	<e path="Bool"/>
+	<c path="Int"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>A slot that executes a listener with two arguments.</haxe_doc>
+	</class><class file="src/msignal/SlotList.hx" path="msignal.SlotList" params="TSlot:TListener">
+		<NIL public="1" static="1">
+			<c path="msignal.SlotList">
+				<d/>
+				<d/>
+			</c>
+			<haxe_doc>Represents an empty list. Used as the list terminator.</haxe_doc>
+		</NIL>
+		<find line="240" public="1" set="method">
+			<f a="listener">
+				<c path="msignal.SlotList.TListener"/>
+				<c path="msignal.SlotList.TSlot"/>
+			</f>
+			<haxe_doc>Retrieves the Slot associated with a supplied listener within the SlotList.
+	@param   listener The Function being searched for
+	@return  The ISlot in this list associated with the listener parameter through the ISlot.listener property.
+			 Returns null if no such ISlot instance exists or the list is empty.</haxe_doc>
+		</find>
+		<contains line="220" public="1" set="method">
+			<f a="listener">
+				<c path="msignal.SlotList.TListener"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Determines whether the supplied listener Function is contained within this list</haxe_doc>
+		</contains>
+		<filterNot line="189" public="1" set="method">
+			<f a="listener">
+				<c path="msignal.SlotList.TListener"/>
+				<c path="msignal.SlotList">
+					<c path="msignal.SlotList.TSlot"/>
+					<c path="msignal.SlotList.TListener"/>
+				</c>
+			</f>
+			<haxe_doc>Returns the slots in this list that do not contain the supplied listener.
+	Note: assumes the listener is not repeated within the list.
+	@param	listener The function to remove.
+	@return A list consisting of all elements of this list that do not have listener.</haxe_doc>
+		</filterNot>
+		<insertWithPriority line="152" public="1" set="method"><f a="slot">
+	<c path="msignal.SlotList.TSlot"/>
+	<c path="msignal.SlotList">
+		<c path="msignal.SlotList.TSlot"/>
+		<c path="msignal.SlotList.TListener"/>
+	</c>
+</f></insertWithPriority>
+		<append line="118" public="1" set="method">
+			<f a="slot">
+				<c path="msignal.SlotList.TSlot"/>
+				<c path="msignal.SlotList">
+					<c path="msignal.SlotList.TSlot"/>
+					<c path="msignal.SlotList.TListener"/>
+				</c>
+			</f>
+			<haxe_doc>Appends a slot to this list.
+	Note: appending is O(n). Where possible, prepend which is O(1).
+	In some cases, many list items must be cloned to 
+	avoid changing existing lists.
+	@param	slot The item to be appended.
+	@return	A list consisting of all elements of this list followed by slot.</haxe_doc>
+		</append>
+		<prepend line="105" public="1" set="method">
+			<f a="slot">
+				<c path="msignal.SlotList.TSlot"/>
+				<c path="msignal.SlotList">
+					<c path="msignal.SlotList.TSlot"/>
+					<c path="msignal.SlotList.TListener"/>
+				</c>
+			</f>
+			<haxe_doc>Prepends a slot to this list.
+	@param	slot The item to be prepended.
+	@return	A list consisting of slot followed by all elements of this list.</haxe_doc>
+		</prepend>
+		<get_length line="79" set="method"><f a=""><c path="Int"/></f></get_length>
+		<length public="1" get="get_length" set="null">
+			<c path="Int"/>
+			<haxe_doc>The number of slots in the list.</haxe_doc>
+		</length>
+		<nonEmpty public="1"><e path="Bool"/></nonEmpty>
+		<tail public="1"><c path="msignal.SlotList">
+	<c path="msignal.SlotList.TSlot"/>
+	<c path="msignal.SlotList.TListener"/>
+</c></tail>
+		<head public="1"><c path="msignal.SlotList.TSlot"/></head>
+		<new line="49" public="1" set="method">
+			<f a="head:?tail">
+				<c path="msignal.SlotList.TSlot"/>
+				<c path="msignal.SlotList">
+					<c path="msignal.SlotList.TSlot"/>
+					<c path="msignal.SlotList.TListener"/>
+				</c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Creates and returns a new SlotList object.
+	 *
+	<p>A user never has to create a SlotList manually. 
+	Use the <code>NIL</code> element to represent an empty list. 
+	<code>NIL.prepend(value)</code> would create a list containing <code>value</code></p>.
+	 *
+	@param head The first slot in the list.
+	@param tail A list containing all slots except head.]]></haxe_doc>
+		</new>
+	</class></haxe>

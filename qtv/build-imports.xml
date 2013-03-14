@@ -1,0 +1,16 @@
+<!-- Assets imported by this project -->
+<project name="quick.tv.imports">
+    <dirname property="quick.tv.imports.dir" file="${ant.file.quick.tv.imports}"/>
+	
+	<property environment="env"/>
+	
+    <!-- Shared properties -->
+    <property file="${quick.tv.imports.dir}/build-user.properties" />
+	
+    <!-- Common properties and targets -->
+    <import file="toolchain/antennae/tools/build-common-imports.xml" />
+    
+    <!-- Assets -->
+    <import file="build-assets.xml"/>
+	
+</project>
