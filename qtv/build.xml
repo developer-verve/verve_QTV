@@ -1,0 +1,161 @@
+<!--
+    Master build file for complex projects. Contains 
+    targets that invoke their counterparts in the various subprojects.
+-->
+<project name="quick.tv" default="build" basedir=".">
+
+	<!--
+        Import a special target set for master build files.
+        This overrides the standard targets defined in 
+        build-common-targets which is pulled in through
+        the build-imports.xml process.
+    -->
+	<import file="toolchain/antennae/tools/build-master-targets.xml" />
+
+	<import file="build-imports.xml" />
+
+	<!--
+        A filelist defines an ordered list that is used to
+        encode the project build order that should be used
+    -->
+	<filelist id="children.filelist" dir=".">
+		<file name="qtv-flex-core/qtv-flex-assets" />
+		<file name="qtv-flex-core/qtv-flex-skins" />
+		<file name="qtv-flex-core/qtv-flex-datastructures" />
+		<!--file name="qtv-flex-core/qtv-haxe-datastructures" /-->
+		<file name="qtv-flex-core/qtv-flex-operations" />
+		<!--file name="qtv-flex-core/qtv-haxe-operations" /-->
+		<file name="qtv-flex-core/qtv-flex-utils" />
+		<!--file name="qtv-flex-core/qtv-haxe-utils" /-->
+		<file name="qtv-flex-core/qtv-flex-core-api" />
+		<!--file name="qtv-flex-core/qtv-haxe-core-api" /-->
+		<file name="qtv-flex-core/qtv-flex-core-impl" />
+		<!--file name="qtv-flex-core/qtv-haxe-core-impl" /-->
+		<file name="qtv-flex-core/qtv-flex-component-api" />
+		<file name="qtv-flex-core/qtv-flex-core-components-impl" />
+		<file name="qtv-flex-core/qtv-flex-service-api" />
+		<!--file name="qtv-flex-core/qtv-haxe-service-api" /-->
+		<file name="qtv-flex-core/qtv-flex-service-json" />
+		<!--file name="qtv-flex-core/qtv-haxe-service-json" /-->
+		<file name="qtv-flex-core/qtv-flex-component-service-impl" />
+		<!--file name="qtv-flex-core/qtv-haxe-component-service-impl" /-->
+		<file name="qtv-flex-core/qtv-flex-application-api" />
+		<!--file name="qtv-flex-core/qtv-haxe-application-api" /-->
+		<file name="qtv-flex-core/qtv-flex-application-impl" />
+		<!--file name="qtv-flex-core/qtv-haxe-application-impl" /-->
+		<file name="qtv-flex-core/qtv-flex-youtube" />
+		<file name="qtv-flex-core/qtv-flex-ooyala" />
+		<file name="qtv-flex-core/qtv-flex-kaltura" />
+		<file name="qtv-flex-core/qtv-flex-botr" />
+		<file name="qtv-flex-core/qtv-flex-brightcove" />
+		<file name="qtv-flex-core/qtv-flex-vimeo" />
+		<file name="qtv-flex-core/qtv-flex-vzaar" />
+		<file name="qtv-flex-core/qtv-flex-accountview" />
+		<file name="qtv-flex-core/qtv-flex-videoplayer" />
+		<file name="qtv-webapp-client/qtv-flex-file-browser-api" />
+		<file name="qtv-webapp-client/qtv-flex-analytics-browser-api" />
+		<file name="qtv-webapp-client/qtv-flex-media-browser-api" />
+		<file name="qtv-webapp-client/qtv-flex-project-browser-api" />
+		<file name="qtv-webapp-client/qtv-flex-videos-browser-api" />
+		<file name="qtv-webapp-client/qtv-flex-editor-api" />
+		<file name="qtv-webapp-client/qtv-flex-file-browser-impl" />
+		<file name="qtv-webapp-client/qtv-flex-analytics-browser-impl" />
+		<file name="qtv-webapp-client/qtv-flex-media-browser-impl" />
+		<file name="qtv-webapp-client/qtv-flex-project-browser-impl" />
+		<file name="qtv-webapp-client/qtv-flex-videos-browser-impl" />
+		<file name="qtv-webapp-client/qtv-flex-editor-impl" />
+		<file name="qtv-webapp-client/qtv-flex-management-client" />
+		<file name="qtv-webapp-client/qtv-flex-editor-vod" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-api" />
+		<!--file name="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player-api" /-->
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-youtube" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-ooyala" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-kaltura" />
+		<!--file name="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player-kaltura" /-->
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-brightcove" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-vzaar" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-controls-default" />
+		<!--file name="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player-controls-default" /-->
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-controls-ooyala" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player" />
+		<!--file name="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player" /-->
+		<!--file name="xuloo-haxe-ui" /-->
+		<!--file name="qtv-haxe-ui" /-->
+		<!--file name="
+
+
+
+
+
+
+
+
+" /-->
+		<file name="qtv-play-webapp" />
+	</filelist>
+
+	<target name="projects">
+		<pathconvert pathsep="&#xA;" property="projects.filelist" refid="children.filelist">
+			<mapper type="flatten" />
+		</pathconvert>
+		<echo>${projects.filelist}</echo>
+	</target>
+
+	<target name="delete-svn">
+		<delete includeemptydirs="true">
+			<fileset dir="." includes="**/.svn/" defaultexcludes="false" />
+		</delete>
+	</target>
+	
+	<target name="deploy">
+		<echoAndRun target="deploy"/>
+	</target>
+	
+	<filelist id="components.filelist" dir=".">
+		<file name="qtv-flex-core/qtv-flex-component-api" />
+		<file name="qtv-flex-core/qtv-flex-core-components-impl" />
+		<file name="qtv-flex-core/qtv-flex-component-service-impl" />
+	</filelist>
+	
+	<target name="stage-components">
+		<echoAndRun children.filelist.id="components.filelist" target="stage"/>
+ 	</target>
+	
+	<filelist id="video.player.filelist" dir=".">
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-api" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-youtube" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-ooyala" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-kaltura" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-brightcove" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-vzaar" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-controls-default" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player-controls-ooyala" />
+		<file name="qtv-interactive-video-player/flash/qtv-flex-interactive-video-player" />
+	</filelist>
+	
+	<target name="stage-video-player">
+		<echoAndRun children.filelist.id="video.player.filelist" target="stage"/>
+ 	</target>
+	
+	<filelist id="haxe.ui.filelist" dir=".">
+		<file name="xuloo-haxe-ui" />
+		<file name="qtv-haxe-ui" />
+		<file name="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player-api"/>
+		<file name="qtv-interactive-video-player/haxe/qtv-haxe-interactive-video-player"/>
+		<file name="qtv-flex-core/qtv-haxe-component-service-impl" />
+		<file name="qtv-flex-core/qtv-haxe-datastructures"/>
+		<file name="qtv-flex-core/qtv-haxe-operations"/>
+		<file name="qtv-flex-core/qtv-haxe-utils"/>
+		<file name="qtv-flex-core/qtv-haxe-core-api" />
+		<file name="qtv-flex-core/qtv-haxe-core-impl" />
+		<file name="qtv-flex-core/qtv-haxe-application-api" />
+		<file name="qtv-flex-core/qtv-haxe-application-impl" />
+		<file name="qtv-flex-core/qtv-haxe-service-api"/>
+		<file name="qtv-flex-core/qtv-haxe-service-json"/>
+	</filelist>
+	
+	<target name="stage-haxe-ui">
+		<echoAndRun children.filelist.id="haxe.ui.filelist" target="stage"/>
+	</target>
+	
+</project>

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "setup" ]; then
+	args=("$@")
+	echo $@
+	sh setup.sh $@
+else 
+	if [ $1 = "--deploy" ]; then
+		# Check our Java env
+		JAVA_HOME=${JAVA_HOME:?JAVA_HOME is not set}
+
+		"${JAVA_HOME}/bin/java" -classpath "qtv-java-support/qtv-java-deployer/target/qtv-java-deployer-1.0-jar-with-dependencies.jar" "qtv.deploy.App" "$@"
+	else
+		if [ $1 = "--switch" ]; then
+			QTV_HOME=${QTV_HOME:?QTV_HOME is not set}
+
+			cd $QTV_HOME && git checkout $2
+			cd $QTV_HOME/qtv-webapp-client && git checkout $2
+			cd $QTV_HOME/qtv-flex-core && git checkout $2
+			cd $QTV_HOME/qtv-interactive-video-player && git checkout $2
+			cd $QTV_HOME/qtv-play-webapp && git checkout $2 && play deps --sync && play eclipsify
+		fi
+	fi
+fi
+
+echo "complete"
+
+# Check our Java env
+#JAVA_HOME=${JAVA_HOME:?JAVA_HOME is not set}
+
+# If a classpath exists preserve it
+#CP="${CLASSPATH}"
+
+# $QTV_HOME
+
+#"${JAVA_HOME}/bin/java" -classpath "target/qtv-java-deployer-1.0-jar-with-dependencies.jar" "qtv.deploy.App" "$@"
+
+#echo "complete, thank you!"

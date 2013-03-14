@@ -1,0 +1,1002 @@
+<haxe><class file="src/mmvc/api/ICommand.hx" path="mmvc.api.ICommand" params="" interface="1">
+		<execute public="1" set="method"><f a=""><e path="Void"/></f></execute>
+		<meta><m n="interface"/></meta>
+	</class><typedef module="mmvc.api.ICommandMap" file="src/mmvc/api/ICommandMap.hx" path="mmvc.api.CommandClass" params=""><c path="Class"><c path="mmvc.api.ICommand"/></c></typedef><typedef module="mmvc.api.ICommandMap" file="src/mmvc/api/ICommandMap.hx" path="mmvc.api.SignalClass" params=""><c path="Class"><t path="msignal.AnySignal"/></c></typedef><class file="src/mmvc/api/ICommandMap.hx" path="mmvc.api.ICommandMap" params="" interface="1">
+		<release public="1" set="method"><f a="command">
+	<c path="mmvc.api.ICommand"/>
+	<e path="Void"/>
+</f></release>
+		<detain public="1" set="method"><f a="command">
+	<c path="mmvc.api.ICommand"/>
+	<e path="Void"/>
+</f></detain>
+		<unmapSignalClass public="1" set="method"><f a="signalClass:commandClass">
+	<t path="mmvc.api.SignalClass"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Void"/>
+</f></unmapSignalClass>
+		<unmapSignal public="1" set="method"><f a="signal:commandClass">
+	<t path="msignal.AnySignal"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Void"/>
+</f></unmapSignal>
+		<hasSignalCommand public="1" set="method"><f a="signal:commandClass">
+	<t path="msignal.AnySignal"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Bool"/>
+</f></hasSignalCommand>
+		<mapSignalClass public="1" set="method"><f a="signalClass:commandClass:?oneShot">
+	<t path="mmvc.api.SignalClass"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Bool"/>
+	<t path="msignal.AnySignal"/>
+</f></mapSignalClass>
+		<mapSignal public="1" set="method"><f a="signal:commandClass:?oneShot">
+	<t path="msignal.AnySignal"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Bool"/>
+	<e path="Void"/>
+</f></mapSignal>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/api/IContext.hx" path="mmvc.api.IContext" params="" interface="1">
+		<commandMap public="1" get="get_commandMap" set="null"><c path="mmvc.api.ICommandMap"/></commandMap>
+		<haxe_doc>The Robotlegs Context contract</haxe_doc>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/api/IGuard.hx" path="mmvc.api.IGuard" params="" interface="1">
+		<approve public="1" set="method"><f a=""><e path="Bool"/></f></approve>
+		<meta><m n="interface"/></meta>
+	</class><typedef module="mmvc.api.IGuardedCommandMap" file="src/mmvc/api/IGuardedCommandMap.hx" path="mmvc.api.GuardClassArray" params=""><c path="Array"><c path="Class"><c path="mmvc.api.IGuard"/></c></c></typedef><class file="src/mmvc/api/IGuardedCommandMap.hx" path="mmvc.api.IGuardedCommandMap" params="" interface="1">
+		<implements path="mmvc.api.ICommandMap"/>
+		<mapGuardedSignalClassWithFallback public="1" set="method">
+			<f a="signalClass:commandClass:fallbackCommandClass:guards:?oneShot">
+				<t path="mmvc.api.SignalClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<t path="msignal.AnySignal"/>
+			</f>
+			<haxe_doc><![CDATA[Map a Command to an instance of a Signal, with Guards and a fallback 
+	Command 
+	
+	<p>The <code>signalClass</code> - a Class implementing ISignal</p>
+	<p>The <code>commandClass</code> must implement an execute() method - 
+	executed if the guards approve</p>
+	<p>The <code>fallbackCommandClass</code> must implement an execute() method 
+	- executed if the guards disapprove</p>
+	<p>The <code>guards</code> must be a Class which implements an approve() 
+	method</p>
+	<p>or an <code>Array</code> of Classes which implements an approve() 
+	method</p>
+	
+	@param signal The signal class to be created - an instance of this Class is 
+	then available for injection as a singleton in the main Injector.
+	@param commandClass The Class to instantiate - must have an execute() 
+	method - executed if the guards approve
+	@param fallbackCommandClass The Class to instantiate - must have an 
+	execute() method - executed if the guards disapprove
+	@param guards The Classes of the guard or guards to instantiate - must have 
+	an approve() method
+	@param oneshot Unmap the Class after execution?
+	
+	@throws mmvc.base.ContextError]]></haxe_doc>
+		</mapGuardedSignalClassWithFallback>
+		<mapGuardedSignalWithFallback public="1" set="method">
+			<f a="signal:commandClass:fallbackCommandClass:guards:?oneShot">
+				<t path="msignal.AnySignal"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Map a Command to an instance of a Signal, with Guards and a fallback 
+	Command
+	
+	<p>The <code>signal</code> - an instance of ISignal</p>
+	<p>The <code>commandClass</code> must implement an execute() method - 
+	executed if the guards approve</p>
+	<p>The <code>fallbackCommandClass</code> must implement an execute() method 
+	- executed if the guards disapprove</p>
+	<p>The <code>guards</code> must be a Class which implements an approve() 
+	method</p>
+	<p>or an <code>Array</code> of Classes which implements an approve() 
+	method</p>
+	
+	@param signal The signal instance to trigger this command. Values 
+	dispatched by this signal are available for injection into guards and the 
+	command.
+	@param commandClass The Class to instantiate - must have an execute() 
+	method - exeecuted if the guards approve
+	@param fallbackCommandClass The Class to instantiate - must have an 
+	execute() method - executed if the guards disapprove
+	@param guards The Classes of the guard or guards to instantiate - must have 
+	an approve() method
+	@param oneshot Unmap the Class after execution?
+	
+	@throws mmvc.base.ContextError]]></haxe_doc>
+		</mapGuardedSignalWithFallback>
+		<mapGuardedSignalClass public="1" set="method">
+			<f a="signalClass:commandClass:guards:?oneShot">
+				<t path="mmvc.api.SignalClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<t path="msignal.AnySignal"/>
+			</f>
+			<haxe_doc><![CDATA[Map a Command to an instance of a Signal, with Guards
+	
+	<p>The <code>signalClass</code> - a Class implementing ISignal</p>
+	<p>The <code>commandClass</code> must implement an execute() method</p>
+	<p>The <code>guards</code> must be a Class which implements an approve() 
+	method</p>
+	<p>or an <code>Array</code> of Classes which implements an approve() 
+	method</p>
+	
+	@param commandClass The signal class to be created - an instance of this 
+	Class is then available for injection as a singleton in the main Injector.
+	@param commandClass The Class to instantiate - must have an execute() 
+	method
+	@param guards The Classes of the guard or guards to instantiate - must 
+	have an approve() method
+	@param oneshot Unmap the Class after execution?
+	
+	@throws mmvc.base.ContextError]]></haxe_doc>
+		</mapGuardedSignalClass>
+		<mapGuardedSignal public="1" set="method">
+			<f a="signal:commandClass:guards:?oneshot">
+				<t path="msignal.AnySignal"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Map a Command to an instance of a Signal, with Guards
+	
+	<p>The <code>signal</code> - an instance of ISignal</p>
+	<p>The <code>commandClass</code> must implement an execute() method</p>
+	<p>The <code>guards</code> must be a Class which implements an approve() 
+	method</p>
+	<p>or an <code>Array</code> of Classes which implements an approve() 
+	method</p>
+	
+	@param signal The signal instance to trigger this command. Values 
+	dispatched by this signal are available for injection into guards and the 
+	command.
+	@param commandClass The Class to instantiate - must have an execute() 
+	method
+	@param guards The Classes of the guard or guards to instantiate - must
+	have an approve() method
+	@param oneshot Unmap the Class after execution?
+	
+	@throws mmvc.base.ContextError]]></haxe_doc>
+		</mapGuardedSignal>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/api/IMediator.hx" path="mmvc.api.IMediator" params="" interface="1">
+		<setViewComponent public="1" set="method">
+			<f a="viewComponent">
+				<d/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[The <code>IMediator</code>'s view component
+	
+	@param The view component]]></haxe_doc>
+		</setViewComponent>
+		<getViewComponent public="1" set="method">
+			<f a=""><d/></f>
+			<haxe_doc><![CDATA[The <code>IMediator</code>'s view component
+	@return The view component]]></haxe_doc>
+		</getViewComponent>
+		<onRemove public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc><![CDATA[Should be invoked by the <code>IMediator</code> itself when it is ready to 
+	for cleanup.
+	<p>Override and place your cleanup code here</p>]]></haxe_doc>
+		</onRemove>
+		<preRemove public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc><![CDATA[Invoked when the <code>IMediator</code> has been removed by the 
+	<code>IMediatorMap</code>]]></haxe_doc>
+		</preRemove>
+		<onRegister public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc><![CDATA[Should be invoked by the <code>IMediator</code> itself when it is ready to 
+	be interacted with.
+	<p>Override and place your initialization code here</p>]]></haxe_doc>
+		</onRegister>
+		<preRegister public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc><![CDATA[Should be invoked by the <code>IMediatorMap</code> during 
+	<code>IMediator</code> registration]]></haxe_doc>
+		</preRegister>
+		<haxe_doc>The Robotlegs Mediator contract</haxe_doc>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/api/IMediatorMap.hx" path="mmvc.api.IMediatorMap" params="" interface="1">
+		<enabled public="1" set="set_enabled">
+			<e path="Bool"/>
+			<haxe_doc><![CDATA[The <code>IMediatorMap</code>'s enabled status
+	
+	@return Whether the <code>IMediatorMap</code> is enabled]]></haxe_doc>
+		</enabled>
+		<contextView public="1" set="set_contextView">
+			<c path="mmvc.api.IViewContainer"/>
+			<haxe_doc><![CDATA[The <code>IMediatorMap</code>'s <code>IViewContainer</code>
+	
+	@return view The <code>IViewContainer</code> to use as scope for this 
+	<code>IMediatorMap</code>]]></haxe_doc>
+		</contextView>
+		<hasMediatorForView public="1" set="method">
+			<f a="viewComponent">
+				<d/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc><![CDATA[Check if an <code>IMediator</code> has been registered for a view instance
+	
+	@param viewComponent The view that the <code>IMediator</code> was 
+	registered with
+	@return Whether an <code>IMediator</code> has been registered for this 
+	view instance]]></haxe_doc>
+		</hasMediatorForView>
+		<hasMediator public="1" set="method">
+			<f a="mediator">
+				<c path="mmvc.api.IMediator"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc><![CDATA[Check if the <code>IMediator</code> has been registered
+	
+	@param mediator The <code>IMediator</code> instance
+	@return Whether this <code>IMediator</code> has been registered]]></haxe_doc>
+		</hasMediator>
+		<hasMapping public="1" set="method">
+			<f a="viewClassOrName">
+				<d/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Check if the view Class has been mapped or not
+	
+	@param viewClassOrName The concrete view Class or Fully Qualified classname
+	@return Whether this view class has been mapped</haxe_doc>
+		</hasMapping>
+		<retrieveMediator public="1" set="method">
+			<f a="viewComponent">
+				<d/>
+				<c path="mmvc.api.IMediator"/>
+			</f>
+			<haxe_doc><![CDATA[Retrieve a registered <code>IMediator</code> instance
+	
+	@param viewComponent The view that the <code>IMediator</code> was 
+	registered with
+	@return The <code>IMediator</code>]]></haxe_doc>
+		</retrieveMediator>
+		<removeMediatorByView public="1" set="method">
+			<f a="viewComponent">
+				<d/>
+				<c path="mmvc.api.IMediator"/>
+			</f>
+			<haxe_doc><![CDATA[Remove a registered <code>IMediator</code> instance
+	
+	@param viewComponent The view that the <code>IMediator</code> was 
+	registered with
+	@return The <code>IMediator</code> that was removed]]></haxe_doc>
+		</removeMediatorByView>
+		<removeMediator public="1" set="method">
+			<f a="mediator">
+				<c path="mmvc.api.IMediator"/>
+				<c path="mmvc.api.IMediator"/>
+			</f>
+			<haxe_doc><![CDATA[Remove a registered <code>IMediator</code> instance
+	
+	@param mediator The <code>IMediator</code> to remove
+	@return The <code>IMediator</code> that was removed]]></haxe_doc>
+		</removeMediator>
+		<registerMediator public="1" set="method">
+			<f a="viewComponent:mediator">
+				<d/>
+				<c path="mmvc.api.IMediator"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Manually register an <code>IMediator</code> instance
+	
+	<p>NOTE: Registering a Mediator will NOT inject its dependencies. It is 
+	assumed that dependencies are already satisfied.</p>
+	
+	@param viewComponent The view component for the <code>IMediator</code>
+	@param mediator The <code>IMediator</code> to register]]></haxe_doc>
+		</registerMediator>
+		<createMediator public="1" set="method">
+			<f a="viewComponent">
+				<d/>
+				<c path="mmvc.api.IMediator"/>
+			</f>
+			<haxe_doc><![CDATA[Create an instance of a mapped <code>IMediator</code>
+	
+	<p>This will instantiate and register a Mediator for a given View Component.
+	Mediator dependencies will be automatically resolved.</p>
+	
+	@param viewComponent An instance of the view Class previously mapped to an 
+	<code>IMediator</code> Class
+	@return The <code>IMediator</code>]]></haxe_doc>
+		</createMediator>
+		<unmapView public="1" set="method">
+			<f a="viewClassOrName">
+				<d/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Unmap a view Class
+	
+	@param viewClassOrName The concrete view Class or Fully Qualified classname</haxe_doc>
+		</unmapView>
+		<mapView public="1" set="method">
+			<f a="viewClassOrName:mediatorClass:?injectViewAs:?autoCreate:?autoRemove">
+				<d/>
+				<c path="Class"><d/></c>
+				<d/>
+				<e path="Bool"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Map an <code>IMediator</code> to a view Class
+
+	@param viewClassOrName The concrete view Class or Fully Qualified classname
+	@param mediatorClass The <code>IMediator</code> Class
+	@param injectViewAs The explicit view Interface or Class that the mediator 
+	depends on OR an Array of such Interfaces/Classes.
+	@param autoCreate Automatically construct and register an instance of Class 
+	<code>mediatorClass</code> when an instance of Class <code>viewClass</code> 
+	is detected
+	@param autoRemove Automatically remove an instance of Class 
+	<code>mediatorClass</code> when its <code>viewClass</code> leaves the 
+	ancestory of the context view]]></haxe_doc>
+		</mapView>
+		<haxe_doc>The Robotlegs MediatorMap contract</haxe_doc>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/api/IViewContainer.hx" path="mmvc.api.IViewContainer" params="" interface="1">
+		<isAdded public="1" set="method"><f a="view">
+	<d/>
+	<e path="Bool"/>
+</f></isAdded>
+		<viewRemoved public="1"><f a="">
+	<d/>
+	<e path="Void"/>
+</f></viewRemoved>
+		<viewAdded public="1"><f a="">
+	<d/>
+	<e path="Void"/>
+</f></viewAdded>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/api/IViewMap.hx" path="mmvc.api.IViewMap" params="" interface="1">
+		<enabled public="1" set="set_enabled">
+			<e path="Bool"/>
+			<haxe_doc><![CDATA[The <code>IViewMap</code>'s enabled status
+	
+	@return Whether the <code>IViewMap</code> is enabled]]></haxe_doc>
+		</enabled>
+		<contextView public="1" set="set_contextView">
+			<c path="mmvc.api.IViewContainer"/>
+			<haxe_doc><![CDATA[The <code>IViewMap</code>'s <code>IViewContainer</code>
+	
+	@return view The <code>IViewContainer</code> to use as scope for this 
+	<code>IViewMap</code>]]></haxe_doc>
+		</contextView>
+		<hasType public="1" set="method">
+			<f a="type">
+				<c path="Class"><d/></c>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Check if a class or interface has been registered for automatic injection
+	
+	@param type The concrete view interface 
+	@return Whether an interface has been registered for automatic injection</haxe_doc>
+		</hasType>
+		<unmapType public="1" set="method">
+			<f a="type">
+				<c path="Class"><d/></c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Unmap a view component class or interface
+	
+	@param type The concrete view Interface</haxe_doc>
+		</unmapType>
+		<mapType public="1" set="method">
+			<f a="type">
+				<c path="Class"><d/></c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Map a view component class or interface for automatic injection
+	
+	@param type The concrete view Interface</haxe_doc>
+		</mapType>
+		<hasPackage public="1" set="method">
+			<f a="packageName">
+				<c path="String"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Check if a package has been registered for automatic injection
+	
+	@param packageName The substring to compare
+	@return Whether a package has been registered for automatic injection</haxe_doc>
+		</hasPackage>
+		<unmapPackage public="1" set="method">
+			<f a="packageName">
+				<c path="String"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Unmap a package
+	
+	@param packageName The substring to compare</haxe_doc>
+		</unmapPackage>
+		<mapPackage public="1" set="method">
+			<f a="packageName">
+				<c path="String"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Map an entire package (including sub-packages) for automatic injection
+	
+	@param packageName The substring to compare</haxe_doc>
+		</mapPackage>
+		<haxe_doc>The Robotlegs ViewMap contract. All IViewMap automatic injections occur AFTER 
+the view components are added to the stage.</haxe_doc>
+		<meta><m n="interface"/></meta>
+	</class><class file="src/mmvc/base/CommandMap.hx" path="mmvc.base.CommandMap" params="">
+		<implements path="mmvc.api.ICommandMap"/>
+		<release line="177" public="1" set="method"><f a="command">
+	<c path="mmvc.api.ICommand"/>
+	<e path="Void"/>
+</f></release>
+		<detain line="172" public="1" set="method"><f a="command">
+	<c path="mmvc.api.ICommand"/>
+	<e path="Void"/>
+</f></detain>
+		<unmapSignalValues line="164" set="method"><f a="valueClasses:valueObjects">
+	<c path="Array"><d/></c>
+	<c path="Array"><d/></c>
+	<e path="Void"/>
+</f></unmapSignalValues>
+		<mapSignalValues line="156" set="method"><f a="valueClasses:valueObjects">
+	<c path="Array"><d/></c>
+	<c path="Array"><d/></c>
+	<e path="Void"/>
+</f></mapSignalValues>
+		<createCommandInstance line="151" set="method"><f a="commandClass">
+	<t path="mmvc.api.CommandClass"/>
+	<c path="mmvc.api.ICommand"/>
+</f></createCommandInstance>
+		<routeSignalToCommand line="135" set="method"><f a="signal:valueObjects:commandClass:oneshot">
+	<t path="msignal.AnySignal"/>
+	<c path="Array"><d/></c>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Bool"/>
+	<e path="Void"/>
+</f></routeSignalToCommand>
+		<unmapSignal line="123" public="1" set="method"><f a="signal:commandClass">
+	<t path="msignal.AnySignal"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Void"/>
+</f></unmapSignal>
+		<hasSignalCommand line="114" public="1" set="method"><f a="signal:commandClass">
+	<t path="msignal.AnySignal"/>
+	<c path="Class"><c path="mmvc.api.ICommand"/></c>
+	<e path="Bool"/>
+</f></hasSignalCommand>
+		<createSignalClassInstance line="97" set="method"><f a="signalClass">
+	<t path="mmvc.api.SignalClass"/>
+	<t path="msignal.AnySignal"/>
+</f></createSignalClassInstance>
+		<getSignalClassInstance line="85" set="method"><f a="signalClass">
+	<t path="mmvc.api.SignalClass"/>
+	<t path="msignal.AnySignal"/>
+</f></getSignalClassInstance>
+		<unmapSignalClass line="79" public="1" set="method"><f a="signalClass:commandClass">
+	<t path="mmvc.api.SignalClass"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Void"/>
+</f></unmapSignalClass>
+		<mapSignalClass line="72" public="1" set="method"><f a="signalClass:commandClass:?oneShot">
+	<t path="mmvc.api.SignalClass"/>
+	<t path="mmvc.api.CommandClass"/>
+	<e path="Bool"/>
+	<t path="msignal.AnySignal"/>
+</f></mapSignalClass>
+		<mapSignal line="47" public="1" set="method"><f a="signal:commandClass:?oneShot">
+	<t path="msignal.AnySignal"/>
+	<c path="Class"><c path="mmvc.api.ICommand"/></c>
+	<e path="Bool"/>
+	<e path="Void"/>
+</f></mapSignal>
+		<detainedCommands><c path="mcore.data.Dictionary">
+	<d/>
+	<d/>
+</c></detainedCommands>
+		<signalClassMap><c path="mcore.data.Dictionary">
+	<d/>
+	<d/>
+</c></signalClassMap>
+		<signalMap><c path="mcore.data.Dictionary">
+	<d/>
+	<d/>
+</c></signalMap>
+		<injector><c path="minject.Injector"/></injector>
+		<new line="38" public="1" set="method"><f a="injector">
+	<c path="minject.Injector"/>
+	<e path="Void"/>
+</f></new>
+	</class><class file="src/mmvc/base/ContextError.hx" path="mmvc.base.ContextError" params="">
+		<E_COMMANDMAP_NOIMPL line="30" public="1" static="1"><c path="String"/></E_COMMANDMAP_NOIMPL>
+		<E_COMMANDMAP_OVR line="31" public="1" static="1"><c path="String"/></E_COMMANDMAP_OVR>
+		<E_MEDIATORMAP_NOIMPL line="33" public="1" static="1"><c path="String"/></E_MEDIATORMAP_NOIMPL>
+		<E_MEDIATORMAP_OVR line="34" public="1" static="1"><c path="String"/></E_MEDIATORMAP_OVR>
+		<E_EVENTMAP_NOSNOOPING line="36" public="1" static="1"><c path="String"/></E_EVENTMAP_NOSNOOPING>
+		<E_CONTEXT_INJECTOR line="38" public="1" static="1"><c path="String"/></E_CONTEXT_INJECTOR>
+		<E_CONTEXT_REFLECTOR line="39" public="1" static="1"><c path="String"/></E_CONTEXT_REFLECTOR>
+		<id public="1"><c path="Int"/></id>
+		<message public="1"><c path="String"/></message>
+		<new line="44" public="1" set="method"><f a="?message:?id">
+	<c path="String"/>
+	<c path="Int"/>
+	<e path="Void"/>
+</f></new>
+		<haxe_doc>A framework Error implementation</haxe_doc>
+	</class><class file="src/mmvc/base/GuardedCommandMap.hx" path="mmvc.base.GuardedCommandMap" params="">
+		<extends path="mmvc.base.CommandMap"/>
+		<implements path="mmvc.api.IGuardedCommandMap"/>
+		<routeSignalToGuardedCommand line="91" set="method">
+			<f a="signal:valueObjects:commandClass:fallbackCommandClass:oneshot:guardClasses">
+				<t path="msignal.AnySignal"/>
+				<c path="Array"><d/></c>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<e path="Bool"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Void"/>
+			</f>
+			<meta><m n="IgnoreCover"/></meta>
+		</routeSignalToGuardedCommand>
+		<mapGuardedSignalClassWithFallback line="83" public="1" set="method">
+			<f a="signalClass:commandClass:fallbackCommandClass:guards:?oneShot">
+				<t path="mmvc.api.SignalClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<t path="msignal.AnySignal"/>
+			</f>
+			<meta><m n="IgnoreCover"/></meta>
+		</mapGuardedSignalClassWithFallback>
+		<mapGuardedSignalWithFallback line="53" public="1" set="method">
+			<f a="signal:commandClass:fallbackCommandClass:guards:?oneShot">
+				<t path="msignal.AnySignal"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<meta><m n="IgnoreCover"/></meta>
+		</mapGuardedSignalWithFallback>
+		<mapGuardedSignalClass line="47" public="1" set="method">
+			<f a="signalClass:commandClass:guards:?oneShot">
+				<t path="mmvc.api.SignalClass"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<t path="msignal.AnySignal"/>
+			</f>
+			<meta><m n="IgnoreCover"/></meta>
+		</mapGuardedSignalClass>
+		<mapGuardedSignal line="41" public="1" set="method">
+			<f a="signal:commandClass:guards:?oneShot">
+				<t path="msignal.AnySignal"/>
+				<t path="mmvc.api.CommandClass"/>
+				<t path="mmvc.api.GuardClassArray"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<meta><m n="IgnoreCover"/></meta>
+		</mapGuardedSignal>
+		<new line="35" public="1" set="method"><f a="injector">
+	<c path="minject.Injector"/>
+	<e path="Void"/>
+</f></new>
+	</class><class file="src/mmvc/base/MediatorBase.hx" path="mmvc.base.MediatorBase" params="T">
+		<implements path="mmvc.api.IMediator"/>
+		<mediate line="94" set="method">
+			<f a="slot">
+				<t path="msignal.AnySlot"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Stores reference to any signal listeners, ensuring they are removed during onRemove
+
+	Usage:
+		mediate(something.completed.add(completed));</haxe_doc>
+		</mediate>
+		<setViewComponent line="83" public="1" set="method"><f a="viewComponent">
+	<d/>
+	<e path="Void"/>
+</f></setViewComponent>
+		<getViewComponent line="78" public="1" set="method"><f a=""><d/></f></getViewComponent>
+		<onRemove line="73" public="1" set="method"><f a=""><e path="Void"/></f></onRemove>
+		<preRemove line="67" public="1" set="method"><f a=""><e path="Void"/></f></preRemove>
+		<onRegister line="63" public="1" set="method"><f a=""><e path="Void"/></f></onRegister>
+		<preRegister line="57" public="1" set="method"><f a=""><e path="Void"/></f></preRegister>
+		<slots><c path="Array"><t path="msignal.AnySlot"/></c></slots>
+		<removed><e path="Bool"/></removed>
+		<view public="1">
+			<c path="mmvc.base.MediatorBase.T"/>
+			<haxe_doc>This Mediator's View - used by the RobotLegs MVCS framework internally. You 
+	should declare a dependency on a concrete view component in your 
+	implementation instead of working with this property</haxe_doc>
+		</view>
+		<new line="52" public="1" set="method"><f a=""><e path="Void"/></f></new>
+		<haxe_doc><![CDATA[An abstract <code>IMediator</code> implementation]]></haxe_doc>
+	</class><class file="src/mmvc/base/ViewMapBase.hx" path="mmvc.base.ViewMapBase" params="">
+		<onViewRemoved line="95" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></onViewRemoved>
+		<onViewAdded line="94" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></onViewAdded>
+		<removeListeners line="93" set="method"><f a=""><e path="Void"/></f></removeListeners>
+		<addListeners line="92" set="method"><f a=""><e path="Void"/></f></addListeners>
+		<viewListenerCount><c path="Int"/></viewListenerCount>
+		<injector><c path="minject.Injector"/></injector>
+		<set_enabled line="70" public="1" set="method"><f a="value">
+	<e path="Bool"/>
+	<e path="Bool"/>
+</f></set_enabled>
+		<set_contextView line="53" public="1" set="method"><f a="value">
+	<c path="mmvc.api.IViewContainer"/>
+	<c path="mmvc.api.IViewContainer"/>
+</f></set_contextView>
+		<enabled public="1" set="set_enabled"><e path="Bool"/></enabled>
+		<contextView public="1" set="set_contextView"><c path="mmvc.api.IViewContainer"/></contextView>
+		<new line="42" public="1" set="method">
+			<f a="contextView:injector">
+				<c path="mmvc.api.IViewContainer"/>
+				<c path="minject.Injector"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Creates a new <code>ViewMap</code> object
+	
+	@param contextView The root view node of the context. The map will listen for ADDED_TO_STAGE events on this node
+	@param injector An <code>Injector</code> to use for this context]]></haxe_doc>
+		</new>
+		<haxe_doc>A base ViewMap implementation</haxe_doc>
+	</class><class file="src/mmvc/base/MediatorMap.hx" path="mmvc.base.MediatorMap" params="">
+		<extends path="mmvc.base.ViewMapBase"/>
+		<implements path="mmvc.api.IMediatorMap"/>
+		<createMediatorUsing line="269" set="method"><f a="viewComponent:?viewClassName:?config">
+	<d/>
+	<c path="String"/>
+	<c path="mmvc.base.MappingConfig"/>
+	<c path="mmvc.api.IMediator"/>
+</f></createMediatorUsing>
+		<removeMediatorLater line="254" set="method"><f a=""><e path="Void"/></f></removeMediatorLater>
+		<onViewRemoved line="233" override="1" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></onViewRemoved>
+		<onViewAdded line="216" override="1" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></onViewAdded>
+		<removeListeners line="207" override="1" set="method"><f a=""><e path="Void"/></f></removeListeners>
+		<addListeners line="198" override="1" set="method"><f a=""><e path="Void"/></f></addListeners>
+		<hasMediator line="185" public="1" set="method"><f a="mediator">
+	<c path="mmvc.api.IMediator"/>
+	<e path="Bool"/>
+</f></hasMediator>
+		<hasMediatorForView line="180" public="1" set="method"><f a="viewComponent">
+	<d/>
+	<e path="Bool"/>
+</f></hasMediatorForView>
+		<hasMapping line="174" public="1" set="method"><f a="viewClassOrName">
+	<d/>
+	<e path="Bool"/>
+</f></hasMapping>
+		<retrieveMediator line="169" public="1" set="method"><f a="viewComponent">
+	<d/>
+	<c path="mmvc.api.IMediator"/>
+</f></retrieveMediator>
+		<removeMediatorByView line="164" public="1" set="method"><f a="viewComponent">
+	<d/>
+	<c path="mmvc.api.IMediator"/>
+</f></removeMediatorByView>
+		<removeMediator line="150" public="1" set="method"><f a="mediator">
+	<c path="mmvc.api.IMediator"/>
+	<c path="mmvc.api.IMediator"/>
+</f></removeMediator>
+		<registerMediator line="141" public="1" set="method"><f a="viewComponent:mediator">
+	<d/>
+	<c path="mmvc.api.IMediator"/>
+	<e path="Void"/>
+</f></registerMediator>
+		<createMediator line="136" public="1" set="method"><f a="viewComponent">
+	<d/>
+	<c path="mmvc.api.IMediator"/>
+</f></createMediator>
+		<unmapView line="118" public="1" set="method"><f a="viewClassOrName">
+	<d/>
+	<e path="Void"/>
+</f></unmapView>
+		<mapView line="65" public="1" set="method"><f a="viewClassOrName:mediatorClass:?injectViewAs:?autoCreate:?autoRemove">
+	<d/>
+	<c path="Class"><d/></c>
+	<d/>
+	<e path="Bool"/>
+	<e path="Bool"/>
+	<e path="Void"/>
+</f></mapView>
+		<reflector><c path="minject.Reflector"/></reflector>
+		<hasMediatorsMarkedForRemoval><e path="Bool"/></hasMediatorsMarkedForRemoval>
+		<mediatorsMarkedForRemoval><c path="mcore.data.Dictionary">
+	<d/>
+	<d/>
+</c></mediatorsMarkedForRemoval>
+		<mappingConfigByViewClassName><c path="mcore.data.Dictionary">
+	<d/>
+	<c path="mmvc.base.MappingConfig"/>
+</c></mappingConfigByViewClassName>
+		<mappingConfigByView><c path="mcore.data.Dictionary">
+	<d/>
+	<c path="mmvc.base.MappingConfig"/>
+</c></mappingConfigByView>
+		<mediatorByView><c path="mcore.data.Dictionary">
+	<d/>
+	<c path="mmvc.api.IMediator"/>
+</c></mediatorByView>
+		<new line="53" public="1" set="method">
+			<f a="contextView:injector:reflector">
+				<c path="mmvc.api.IViewContainer"/>
+				<c path="minject.Injector"/>
+				<c path="minject.Reflector"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Creates a new <code>MediatorMap</code> object
+	
+	@param contextView The root view node of the context. The map will listen 
+	for ADDED_TO_STAGE events on this node
+	@param injector An <code>Injector</code> to use for this context
+	@param reflector An <code>Reflector</code> to use for this context]]></haxe_doc>
+		</new>
+		<haxe_doc><![CDATA[An abstract <code>IMediatorMap</code> implementation]]></haxe_doc>
+	</class><class module="mmvc.base.MediatorMap" file="src/mmvc/base/MediatorMap.hx" path="mmvc.base.MappingConfig" params="">
+		<autoRemove public="1"><e path="Bool"/></autoRemove>
+		<autoCreate public="1"><e path="Bool"/></autoCreate>
+		<typedViewClasses public="1"><c path="Array"><d/></c></typedViewClasses>
+		<mediatorClass public="1"><c path="Class"><d/></c></mediatorClass>
+		<new line="309" public="1" set="method"><f a=""><e path="Void"/></f></new>
+	</class><class file="src/mmvc/base/ViewMap.hx" path="mmvc.base.ViewMap" params="">
+		<extends path="mmvc.base.ViewMapBase"/>
+		<implements path="mmvc.api.IViewMap"/>
+		<injectInto line="190" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></injectInto>
+		<onViewRemoved line="185" override="1" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></onViewRemoved>
+		<onViewAdded line="150" override="1" set="method"><f a="view">
+	<d/>
+	<e path="Void"/>
+</f></onViewAdded>
+		<removeListeners line="141" override="1" set="method"><f a=""><e path="Void"/></f></removeListeners>
+		<addListeners line="132" override="1" set="method"><f a=""><e path="Void"/></f></addListeners>
+		<injectedViews><c path="mcore.data.Dictionary">
+	<d/>
+	<d/>
+</c></injectedViews>
+		<mappedTypes><c path="mcore.data.Dictionary">
+	<d/>
+	<d/>
+</c></mappedTypes>
+		<mappedPackages><c path="Array"><d/></c></mappedPackages>
+		<hasPackage line="121" public="1" set="method"><f a="packageName">
+	<c path="String"/>
+	<e path="Bool"/>
+</f></hasPackage>
+		<hasType line="116" public="1" set="method"><f a="type">
+	<c path="Class"><d/></c>
+	<e path="Bool"/>
+</f></hasType>
+		<unmapType line="100" public="1" set="method"><f a="type">
+	<c path="Class"><d/></c>
+	<e path="Void"/>
+</f></unmapType>
+		<mapType line="81" public="1" set="method"><f a="type">
+	<c path="Class"><d/></c>
+	<e path="Void"/>
+</f></mapType>
+		<unmapPackage line="65" public="1" set="method"><f a="packageName">
+	<c path="String"/>
+	<e path="Void"/>
+</f></unmapPackage>
+		<mapPackage line="51" public="1" set="method"><f a="packageName">
+	<c path="String"/>
+	<e path="Void"/>
+</f></mapPackage>
+		<new line="42" public="1" set="method">
+			<f a="contextView:injector">
+				<c path="mmvc.api.IViewContainer"/>
+				<c path="minject.Injector"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Creates a new <code>ViewMap</code> object
+	
+	@param contextView The root view node of the context. The map will listen 
+	for ADDED_TO_STAGE events on this node
+	@param injector An <code>Injector</code> to use for this context]]></haxe_doc>
+		</new>
+		<haxe_doc><![CDATA[An abstract <code>IViewMap</code> implementation]]></haxe_doc>
+	</class><class file="src/mmvc/impl/Actor.hx" path="mmvc.impl.Actor" params="">
+		<injector public="1">
+			<c path="minject.Injector"/>
+			<meta>
+				<m n="name"><e>injector</e></m>
+				<m n="type"><e>minject.Injector</e></m>
+				<m n="inject"/>
+			</meta>
+		</injector>
+		<new line="50" public="1" set="method"><f a=""><e path="Void"/></f></new>
+		<haxe_doc><![CDATA[Abstract MVCS <code>IActor</code> implementation.
+
+<p>As part of the MVCS implementation the <code>Actor</code> provides core 
+functionality to an applications various working parts.</p>
+ 
+<p>Some possible uses for the <code>Actor</code> include, but are no means 
+limited to:</p>
+ 
+<ul>
+	<li>Service classes</li>
+	<li>Model classes</li>
+	<li>Controller classes</li>
+	<li>Presentation model classes</li>
+</ul>
+ 
+<p>Essentially any class where it might be advantagous to have basic dependency 
+injection supplied is a candidate for extending <code>Actor</code>.</p>]]></haxe_doc>
+	</class><class file="src/mmvc/impl/Command.hx" path="mmvc.impl.Command" params="">
+		<implements path="mmvc.api.ICommand"/>
+		<execute line="48" public="1" set="method"><f a=""><e path="Void"/></f></execute>
+		<signal public="1">
+			<t path="msignal.AnySignal"/>
+			<meta>
+				<m n="name"><e>signal</e></m>
+				<m n="type"><e>msignal.Signal</e></m>
+				<m n="inject"/>
+			</meta>
+		</signal>
+		<mediatorMap public="1">
+			<c path="mmvc.api.IMediatorMap"/>
+			<meta>
+				<m n="name"><e>mediatorMap</e></m>
+				<m n="type"><e>mmvc.api.IMediatorMap</e></m>
+				<m n="inject"/>
+			</meta>
+		</mediatorMap>
+		<injector public="1">
+			<c path="minject.Injector"/>
+			<meta>
+				<m n="name"><e>injector</e></m>
+				<m n="type"><e>minject.Injector</e></m>
+				<m n="inject"/>
+			</meta>
+		</injector>
+		<commandMap public="1">
+			<c path="mmvc.api.ICommandMap"/>
+			<meta>
+				<m n="name"><e>commandMap</e></m>
+				<m n="type"><e>mmvc.api.ICommandMap</e></m>
+				<m n="inject"/>
+			</meta>
+		</commandMap>
+		<contextView public="1">
+			<c path="mmvc.api.IViewContainer"/>
+			<meta>
+				<m n="name"><e>contextView</e></m>
+				<m n="type"><e>mmvc.api.IViewContainer</e></m>
+				<m n="inject"/>
+			</meta>
+		</contextView>
+		<new line="46" public="1" set="method"><f a=""><e path="Void"/></f></new>
+		<haxe_doc>Abstract MVCS command implementation</haxe_doc>
+	</class><class file="src/mmvc/impl/Context.hx" path="mmvc.impl.Context" params="">
+		<implements path="mmvc.api.IContext"/>
+		<createChildInjector line="229" set="method"><f a=""><c path="minject.Injector"/></f></createChildInjector>
+		<createInjector line="223" set="method"><f a=""><c path="minject.Injector"/></f></createInjector>
+		<checkAutoStartup line="215" set="method"><f a=""><e path="Void"/></f></checkAutoStartup>
+		<mapInjections line="205" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc><![CDATA[Injection Mapping Hook
+	
+	<p>Override this in your Framework context to change the default configuration</p>
+	
+	<p>Beware of collisions in your container</p>]]></haxe_doc>
+		</mapInjections>
+		<get_viewMap line="188" set="method">
+			<f a=""><c path="mmvc.api.IViewMap"/></f>
+			<haxe_doc><![CDATA[The <code>IViewMap</code> for this <code>IContext</code>]]></haxe_doc>
+		</get_viewMap>
+		<get_mediatorMap line="175" set="method">
+			<f a=""><c path="mmvc.api.IMediatorMap"/></f>
+			<haxe_doc><![CDATA[The <code>IMediatorMap</code> for this <code>IContext</code>]]></haxe_doc>
+		</get_mediatorMap>
+		<get_commandMap line="162" set="method">
+			<f a=""><c path="mmvc.api.ICommandMap"/></f>
+			<haxe_doc><![CDATA[The <code>ICommandMap</code> for this <code>IContext</code>]]></haxe_doc>
+		</get_commandMap>
+		<get_reflector line="149" set="method">
+			<f a=""><c path="minject.Reflector"/></f>
+			<haxe_doc><![CDATA[The <code>Reflector</code> for this <code>IContext</code>]]></haxe_doc>
+		</get_reflector>
+		<get_injector line="136" set="method">
+			<f a=""><c path="minject.Injector"/></f>
+			<haxe_doc><![CDATA[The <code>Injector</code> for this <code>IContext</code>]]></haxe_doc>
+		</get_injector>
+		<set_contextView line="116" public="1" set="method"><f a="value">
+	<c path="mmvc.api.IViewContainer"/>
+	<c path="mmvc.api.IViewContainer"/>
+</f></set_contextView>
+		<shutdown line="114" public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>The Startup Hook. Override this in your Application context.</haxe_doc>
+		</shutdown>
+		<startup line="109" public="1" set="method">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>The startup hook. Override this in your Application context.</haxe_doc>
+		</startup>
+		<viewMap public="1" get="get_viewMap" set="null"><c path="mmvc.api.IViewMap"/></viewMap>
+		<reflector public="1" get="get_reflector" set="null"><c path="minject.Reflector"/></reflector>
+		<mediatorMap public="1" get="get_mediatorMap" set="null"><c path="mmvc.api.IMediatorMap"/></mediatorMap>
+		<injector public="1" get="get_injector" set="null"><c path="minject.Injector"/></injector>
+		<commandMap public="1" get="get_commandMap" set="null"><c path="mmvc.api.ICommandMap"/></commandMap>
+		<contextView public="1" set="set_contextView"><c path="mmvc.api.IViewContainer"/></contextView>
+		<autoStartup><e path="Bool"/></autoStartup>
+		<new line="100" public="1" set="method">
+			<f a="?contextView:?autoStartup">
+				<c path="mmvc.api.IViewContainer"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Abstract Context Implementation
+	
+	<p>Extend this class to create a Framework or Application context</p>
+	
+	@param contextView The root view node of the context. The context will 
+	listen for ADDED_TO_STAGE events on this node
+	@param autoStartup Should this context automatically invoke it's 
+	<code>startup</code> method when it's <code>contextView</code> arrives 
+	on Stage?]]></haxe_doc>
+		</new>
+		<haxe_doc><![CDATA[Abstract MVCS <code>IContext</code> implementation]]></haxe_doc>
+	</class><class file="src/mmvc/impl/Mediator.hx" path="mmvc.impl.Mediator" params="T">
+		<extends path="mmvc.base.MediatorBase"><c path="mmvc.impl.Mediator.T"/></extends>
+		<mediatorMap public="1">
+			<c path="mmvc.api.IMediatorMap"/>
+			<meta>
+				<m n="name"><e>mediatorMap</e></m>
+				<m n="type"><e>mmvc.api.IMediatorMap</e></m>
+				<m n="inject"/>
+			</meta>
+		</mediatorMap>
+		<contextView public="1">
+			<c path="mmvc.api.IViewContainer"/>
+			<meta>
+				<m n="name"><e>contextView</e></m>
+				<m n="type"><e>mmvc.api.IViewContainer</e></m>
+				<m n="inject"/>
+			</meta>
+		</contextView>
+		<injector public="1">
+			<c path="minject.Injector"/>
+			<meta>
+				<m n="name"><e>injector</e></m>
+				<m n="type"><e>minject.Injector</e></m>
+				<m n="inject"/>
+			</meta>
+		</injector>
+		<new line="41" public="1" set="method"><f a=""><e path="Void"/></f></new>
+		<haxe_doc><![CDATA[Abstract MVCS <code>IMediator</code> implementation]]></haxe_doc>
+	</class></haxe>
